@@ -1,0 +1,13 @@
+﻿  Scene.cpp
+C:\Users\User\Desktop\Direct3D_Homework2\Direct3D_Homework2\GameFramework.h(3,1): warning C4005: 'FRAME_BUFFER_WIDTH': 매크로 재정의
+  (소스 파일 'Scene.cpp'을(를) 컴파일하는 중)
+  C:\Users\User\Desktop\Direct3D_Homework2\Direct3D_Homework2\stdafx.h(50,1):
+  'FRAME_BUFFER_WIDTH'의 이전 정의를 참조하십시오.
+  
+C:\Users\User\Desktop\Direct3D_Homework2\Direct3D_Homework2\GameFramework.h(4,1): warning C4005: 'FRAME_BUFFER_HEIGHT': 매크로 재정의
+  (소스 파일 'Scene.cpp'을(를) 컴파일하는 중)
+  C:\Users\User\Desktop\Direct3D_Homework2\Direct3D_Homework2\stdafx.h(51,1):
+  'FRAME_BUFFER_HEIGHT'의 이전 정의를 참조하십시오.
+  
+C:\Users\User\Desktop\Direct3D_Homework2\Direct3D_Homework2\Scene.cpp(488,3): warning C4065: switch문에 'default'가 있으나 'case' 레이블이 없습니다.
+  Direct3D_Homework2.vcxproj -> C:\Users\User\Desktop\Direct3D_Homework2\x64\Debug\Direct3D_Homework2.exe
