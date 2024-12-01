@@ -224,11 +224,6 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		m_pTObjects[i] = pTowerObject;
 	}
 
-
-	//pBillboardObjectShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
-	//pBillboardObjectShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pTerrain);
-	//m_ppShaders[1] = pBillboardObjectShader;
-
 	//Ǯ
 	m_nBillboardShaders = 1;
 	m_ppBillboardShaders = new CShader * [m_nBillboardShaders];
@@ -533,16 +528,16 @@ void CScene::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera
 	pd3dCommandList->SetGraphicsRootConstantBufferView(2, d3dcbLightsGpuVirtualAddress); //Lights
 
 
-	//if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
-	//if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
-	//
-	//for (int i = 0; i < m_TObjects; ++i) {
-	//	if (m_pTObjects[i]) m_pTObjects[i]->Render(pd3dCommandList, pCamera);
-	//}
-	//
-	//for (int i = 0; i < m_nShaders; i++) {
-	//	if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
-	//}
+	if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
+	if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
+	
+	for (int i = 0; i < m_TObjects; ++i) {
+		if (m_pTObjects[i]) m_pTObjects[i]->Render(pd3dCommandList, pCamera);
+	}
+	
+	for (int i = 0; i < m_nShaders; i++) {
+		if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
+	}
 
 	for (int i = 0; i < m_nBillboardShaders; i++) {
 		if (m_ppBillboardShaders[i]) m_ppBillboardShaders[i]->Render(pd3dCommandList, pCamera);

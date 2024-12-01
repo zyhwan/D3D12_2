@@ -311,6 +311,8 @@ CGameObject::CGameObject()
 	m_xmf4x4Transform = Matrix4x4::Identity();
 	m_xmf4x4World = Matrix4x4::Identity();
 	m_xmf3Direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	m_nMeshes = 1;
+	m_ppMeshes = NULL;
 }
 
 CGameObject::CGameObject(int nMaterials) : CGameObject()
@@ -321,6 +323,8 @@ CGameObject::CGameObject(int nMaterials) : CGameObject()
 		m_ppMaterials = new CMaterial*[m_nMaterials];
 		for(int i = 0; i < m_nMaterials; i++) m_ppMaterials[i] = NULL;
 	}
+	m_nMeshes = 1;
+	m_ppMeshes = NULL;
 }
 
 CGameObject::~CGameObject()

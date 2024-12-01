@@ -835,8 +835,8 @@ CBillboardObjectsShader::CBillboardObjectsShader()
 			BYTE nPixel = m_pRawFormatImage->GetRawImagePixel(x, z);
 			switch (nPixel)
 			{
-			case 102: nGrassObjects++; break;
-			case 128: nGrassObjects++; break;
+			/*case 102: nGrassObjects++; break;
+			case 128: nGrassObjects++; break;*/
 			//case 153: nFlowerObjects++; break;
 			//case 179: nFlowerObjects++; break;
 			case 204: nTreeObjects[0]++; break;
@@ -959,16 +959,16 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 
 			switch (nPixel)
 			{
-			case 102:
-				pMesh = pGrassMesh;
-				pMaterial = ppGrassMaterials[0];
-				fyOffset = 8.0f * 0.5f;
-				break;
-			case 128:
-				pMesh = pGrassMesh;
-				pMaterial = ppGrassMaterials[1];
-				fyOffset = 6.0f * 0.5f;
-				break;
+			//case 102:
+			//	pMesh = pGrassMesh;
+			//	pMaterial = ppGrassMaterials[0];
+			//	fyOffset = 8.0f * 0.5f;
+			//	break;
+			//case 128:
+			//	pMesh = pGrassMesh;
+			//	pMaterial = ppGrassMaterials[1];
+			//	fyOffset = 6.0f * 0.5f;
+			//	break;
 			//case 153:
 			//	pMesh = pFlowerMesh;
 			//	pMaterial = ppFlowerMaterials[0];
@@ -1067,4 +1067,17 @@ D3D12_INPUT_LAYOUT_DESC CBillboardObjectsShader::CreateInputLayout()
 void CBillboardObjectsShader::ReleaseUploadBuffers()
 {
 	CObjectsShader::ReleaseUploadBuffers();
+}
+
+void CBillboardObjectsShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature)
+{
+	m_nPipelineStates = 1;
+	m_ppd3dPipelineStates = new ID3D12PipelineState * [m_nPipelineStates];
+
+	CShader::CreateShader(pd3dDevice, pd3dGraphicsRootSignature);
+
+	if (m_pd3dVertexShaderBlob) m_pd3dVertexShaderBlob->Release();
+	if (m_pd3dPixelShaderBlob) m_pd3dPixelShaderBlob->Release();
+
+	if (m_d3dPipelineStateDesc.InputLayout.pInputElementDescs) delete[] m_d3dPipelineStateDesc.InputLayout.pInputElementDescs;
 }
