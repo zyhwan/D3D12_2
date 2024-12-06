@@ -278,7 +278,6 @@ VS_DIFFUSED_OUTPUT VSDiffused(VS_DIFFUSED_INPUT input)
 }
 
 TextureCube gtxtBulletTexture : register(t11);
-SamplerState gssWrap2 : register(s0);
 
 float4 PSDiffused(VS_DIFFUSED_OUTPUT input) : SV_TARGET
 {
@@ -286,7 +285,7 @@ float4 PSDiffused(VS_DIFFUSED_OUTPUT input) : SV_TARGET
     float3 direction = normalize(input.positionL); // 방향 벡터로 정규화
 
     // 큐브 텍스처 샘플링
-    float4 cColor = gtxtBulletTexture.Sample(gssWrap2, direction);
+    float4 cColor = gtxtBulletTexture.Sample(gssWrap, direction);
 
     return cColor;
 }
@@ -318,7 +317,6 @@ VS_TOWER_OUTPUT VSTOWER(VS_TOWER_INPUT input)
 }
 
 TextureCube gtxtTOWERTexture : register(t12);
-SamplerState gssWrap3 : register(s0);
 
 float4 PSTOWER(VS_TOWER_OUTPUT input) : SV_TARGET
 {
@@ -326,7 +324,7 @@ float4 PSTOWER(VS_TOWER_OUTPUT input) : SV_TARGET
     float3 direction = normalize(input.positionL); // 방향 벡터로 정규화
 
     // 큐브 텍스처 샘플링
-    float4 cColor = gtxtTOWERTexture.Sample(gssWrap3, direction);
+    float4 cColor = gtxtTOWERTexture.Sample(gssWrap, direction);
 
     return cColor;
 }
@@ -364,12 +362,12 @@ VS_TEXTURED_OUTPUT VSBillboard(VS_TEXTURED_INPUT input)
 
 float4 PSBillboard(VS_TEXTURED_OUTPUT input) : SV_TARGET
 {
-//    float4 cColor = gtxtTexture.SampleLevel(gssWrap, input.uv, 0);
-////	float4 cColor = gtxtTexture.Sample(gWrapSamplerState, input.uv);
-//    if (cColor.a <= 0.3f)
-//        discard; //clip(cColor.a - 0.3f);
+    float4 cColor = gtxtTexture.Sample(gssWrap, input.uv);
+//	float4 cColor = gtxtTexture.Sample(gWrapSamplerState, input.uv);
+    if (cColor.a <= 0.3f)
+        discard; //clip(cColor.a - 0.3f);
 
-    float4 cColor = {1.0f, 1.0f, 0.0f, 0.0f };
+    //float4 cColor = {1.0f, 1.0f, 0.0f, 0.0f };
     
     return (cColor);
 }

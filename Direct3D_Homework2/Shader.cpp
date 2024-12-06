@@ -835,8 +835,8 @@ CBillboardObjectsShader::CBillboardObjectsShader()
 			BYTE nPixel = m_pRawFormatImage->GetRawImagePixel(x, z);
 			switch (nPixel)
 			{
-			/*case 102: nGrassObjects++; break;
-			case 128: nGrassObjects++; break;*/
+			//case 102: nGrassObjects++; break;
+			//case 128: nGrassObjects++; break;
 			//case 153: nFlowerObjects++; break;
 			//case 179: nFlowerObjects++; break;
 			case 204: nTreeObjects[0]++; break;

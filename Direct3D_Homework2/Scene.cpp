@@ -195,21 +195,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	int nObjects = pBillboardObjectShader->GetNumberOfObjects(); //빌보드(풀) 개수
 
 	m_pDescriptorHeap = new CDescriptorHeap();
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, nObjects + 1 + 1 + 1, 17+25+1+2+1+5+1+7); //SuperCobra(17), Player:Mi24(25), Skybox(1), terrain(2), bullet(1), Tower(1)
+	CreateCbvSrvDescriptorHeaps(pd3dDevice, nObjects + 1 + 1 + 1, 17 + 25 + 1 + 2 + 1 + 5 + 1 + 7); //SuperCobra(17), Player:Mi24(25), Skybox(1), terrain(2), bullet(1), Tower(1)
 
 	BuildDefaultLightsAndMaterials();
 
 	//스카이박스
 	m_pSkyBox = new CSkyBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
-
-	//적 객체
-	m_nShaders = 1;
-	m_ppShaders = new CShader * [m_nShaders];
-	CObjectsShader* pObjectsShader = new CObjectsShader();
-	pObjectsShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
-	pObjectsShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, NULL);
-
-	m_ppShaders[0] = pObjectsShader;
 
 	//터레인
 	XMFLOAT3 xmf3Scale(8.0f, 2.0f, 8.0f);
@@ -230,6 +221,16 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	pBillboardObjectShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	pBillboardObjectShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature,m_pTerrain);
 	m_ppBillboardShaders[0] = pBillboardObjectShader;
+
+
+	//적 객체
+	m_nShaders = 1;
+	m_ppShaders = new CShader * [m_nShaders];
+	CObjectsShader* pObjectsShader = new CObjectsShader();
+	pObjectsShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	pObjectsShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, NULL);
+	m_ppShaders[0] = pObjectsShader;
+
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
@@ -531,17 +532,15 @@ void CScene::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera
 	if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
 	if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
 	
-	for (int i = 0; i < m_TObjects; ++i) {
-		if (m_pTObjects[i]) m_pTObjects[i]->Render(pd3dCommandList, pCamera);
-	}
-	
-	for (int i = 0; i < m_nShaders; i++) {
-		if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
-	}
 
 	for (int i = 0; i < m_nBillboardShaders; i++) {
 		if (m_ppBillboardShaders[i]) m_ppBillboardShaders[i]->Render(pd3dCommandList, pCamera);
 	}
+
+	for (int i = 0; i < m_nShaders; i++) {
+		if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
+	}
+
 }
 
 
